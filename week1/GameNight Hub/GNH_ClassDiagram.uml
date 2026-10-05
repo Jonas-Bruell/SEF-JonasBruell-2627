@@ -1,0 +1,32 @@
+@startuml
+class User {
+    -id : UUID
+    -naam: String
+    -email: String
+    -wachtwoord: String
+    +registreer()
+    +login(wachtwoord: String): boolean
+}
+class Player {
+    +nickname : String
+}
+class Game {
+    -titel : String
+    -maxPlayers : Int
+    -minPlayers : Int
+}
+class Session {
+    -datum : Date
+    -locatie : String
+    +voegSpelerToe(speler : Player)
+}
+class Score {
+    -punten : Int
+    -gewonnen : Boolean
+}
+
+User "1" -- "1" Player : heeft een profiel >
+Game "1" o-- "0..*" Session : wordt gespeeld in >
+Session "1" *-- "2..*" Score : registreert >
+Player "1" -- "0..*" Score : behaalt > 
+@enduml
