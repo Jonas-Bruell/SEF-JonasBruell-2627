@@ -11,14 +11,20 @@ public class SessionTest {
 
     private Player emma;
     private Player noah;
+    private Player ella;
+    private Player paul;
+    private Player sara;
     private Session session;
 
     @BeforeEach
     void setup() {
         this.emma = new Player("Emma", new User("Emma", "emma@odisee.be", "Odisee123!"));
         this.noah = new Player("Noah", new User("Noah", "noah@odisee.be", "Odisee123!"));
+        this.ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
+        this.paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
+        this.sara = new Player("Sara", new User("Sara", "sara@odisee.be", "Odisee123!"));
         this.session = new Session(
-                new Game("Catan", 3, 6, 60),
+                new Game("Catan", 2, 4, 60),
                 LocalDate.of(2026, 11, 3),
                 "Odisee Brussel"
         );
@@ -80,4 +86,20 @@ public class SessionTest {
 
         Assertions.assertEquals(0, session.getScores().size());
     }
+
+    @Test
+    void isVolzet_nieuweSessie_geeftFalse() {
+        Assertions.assertFalse(session.isVolzet());
+    }
+
+    @Test
+    void isVolzet_vierDeelnemers_geeftTrue() {
+        session.voegSpelerToe(emma);
+        session.voegSpelerToe(noah);
+        session.voegSpelerToe(ella);
+        session.voegSpelerToe(paul);
+        session.voegSpelerToe(sara);
+        Assertions.assertTrue(session.isVolzet());
+    }
+
 }
