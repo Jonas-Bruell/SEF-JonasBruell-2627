@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class User {
-    private final UUID id;
+    private UUID id;
     public UUID getId() {
         return id;
     }
@@ -33,8 +33,7 @@ public class User {
         this.wachtwoordHash = wachtwoordHash;
     }
 
-    public User(UUID id, String naam, String email, String wachtwoordHash) {
-        this.id = id;
+    public User(String naam, String email, String wachtwoordHash) {
         this.naam = naam;
         this.email = email;
         this.wachtwoordHash = wachtwoordHash;
