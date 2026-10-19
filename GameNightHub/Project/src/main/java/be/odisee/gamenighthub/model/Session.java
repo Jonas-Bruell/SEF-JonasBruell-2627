@@ -70,7 +70,7 @@ public class Session {
     }
 
     public boolean isVolzet() {
-        return true;
+        return (spelers.size() > game.getMaxSpelers());
     }
 
 }

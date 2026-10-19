@@ -22,14 +22,6 @@ public class Player {
         this.user = user;
     }
 
-    public int berekenTotaalScore() {
-        return 0;
-    }
-
-    public List<Score> bekijkGeschiedenis() {
-        return null;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -41,4 +33,13 @@ public class Player {
     public int hashCode() {
         return Objects.hashCode(user);
     }
+
+    public int berekenTotaalScore() {
+        return 0;
+    }
+
+    public List<Score> bekijkGeschiedenis() {
+        return null;
+    }
+
 }

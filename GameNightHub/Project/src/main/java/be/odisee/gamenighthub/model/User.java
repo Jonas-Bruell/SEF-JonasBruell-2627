@@ -39,12 +39,6 @@ public class User {
         this.wachtwoordHash = wachtwoordHash;
     }
 
-    public void registreer() {}
-
-    public boolean meldAan(String wachtwoord) {
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -56,4 +50,11 @@ public class User {
     public int hashCode() {
         return Objects.hashCode(email);
     }
+
+    public void registreer() {}
+
+    public boolean meldAan(String wachtwoord) {
+        return false;
+    }
+
 }
