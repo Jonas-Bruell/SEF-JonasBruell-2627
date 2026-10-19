@@ -43,7 +43,41 @@ public class SessionTest {
         session.voegSpelerToe(emma);
         session.voegSpelerToe(emma);
 
-        Assertions.assertEquals(1, session.getSpelers().size());
-        Assertions.assertEquals(List.of(emma), session.getSpelers());
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(1, session.getSpelers().size()),
+                () -> Assertions.assertEquals(List.of(emma), session.getSpelers())
+        );
+    }
+
+    @Test
+    void registreerUitslag_spelerKrijgtTwaalfPuntenEnWint_controleerPuntenEnGewonnen() {
+        session.voegSpelerToe(emma);
+        session.registreerUitslag(emma, 12, true);
+
+        Score score = session.getScores().getFirst();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(1, session.getScores().size()),
+                () -> Assertions.assertEquals(emma, score.getSpeler()),
+                () -> Assertions.assertEquals(12, score.getPunten()),
+                () -> Assertions.assertTrue(score.isGewonnen())
+        );
+    }
+
+    @Test
+    void registreerUitslag_tweeSpelersKrijgenScore_komenBeideInScores() {
+        session.voegSpelerToe(emma);
+        session.voegSpelerToe(noah);
+        session.registreerUitslag(emma, 12, true);
+        session.registreerUitslag(noah, 11, false);
+
+        Assertions.assertEquals(2, session.getScores().size());
+    }
+
+    @Test
+    void registreerUitslag_spelerNietInSessionKrijgtScore_komtNietInScores() {
+        session.voegSpelerToe(emma);
+        session.registreerUitslag(noah, 12, true);
+
+        Assertions.assertEquals(0, session.getScores().size());
     }
 }

@@ -45,6 +45,18 @@ public class Session {
         this.scores = new ArrayList<>();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Session session = (Session) o;
+        return Objects.equals(game, session.game) && Objects.equals(datum, session.datum) && Objects.equals(location, session.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(game, datum, location);
+    }
+
     public void voegSpelerToe(Player speler) {
         if (!spelers.contains(speler)) {
             spelers.add(speler);
@@ -57,15 +69,8 @@ public class Session {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Session session = (Session) o;
-        return Objects.equals(game, session.game) && Objects.equals(datum, session.datum) && Objects.equals(location, session.location);
+    public boolean isVolzet() {
+        return true;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(game, datum, location);
-    }
 }
