@@ -16,8 +16,12 @@ public abstract class Mission {
         return 2 * distance;
     }
     public abstract void printMissionDetails();
-    public boolean equals(Mission m) {
-        return m.getName().hashCode() == name.hashCode() && m.getDestination().hashCode() == destination.hashCode();
+    public boolean equals(Object o) {
+        if (!(o instanceof Mission)) {
+            return false;
+        }
+        Mission m = (Mission) o;
+        return m.getName().hashCode() == this.name.hashCode() && m.getDestination().hashCode() == this.destination.hashCode();
     }
     public int hashCode() {
         return Objects.hash(name, destination);

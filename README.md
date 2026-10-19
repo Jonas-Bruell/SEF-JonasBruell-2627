@@ -7,5 +7,8 @@
 # Project Structuur
 ## GameNightHub
 - UML structuur voor project
+- src
+  - main
+  - test
 ## GalacticExplorer
 - Projectje volgens "Java voor C# ontwikkelaars"
