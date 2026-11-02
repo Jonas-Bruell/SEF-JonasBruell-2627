@@ -2,6 +2,8 @@ package be.odisee.gamenighthub.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,6 +94,16 @@ public class GameTest {
         catanOudeTitel.setTitel(nieuweTitel);
         // Assert
         assertEquals(nieuweTitel, catanOudeTitel.getTitel());
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "2, false", "3, true", "4, true", "5, false" })
+    void isGeschiktVoor_testGrenzen_geeftRespectievelijkeBoolean(int aantalSpelers, boolean verwachteBoolean) {
+        // Arrange -> setup()
+        // Act
+        boolean isGeschikt = catan.isGeschiktVoor(aantalSpelers);
+        // Assert
+        assertEquals(isGeschikt, verwachteBoolean);
     }
 
 }
