@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SessionTest {
 
@@ -71,7 +70,7 @@ public class SessionTest {
                 () -> assertEquals(1, session.getScores().size()),
                 () -> assertEquals(emma, score.getSpeler()),
                 () -> assertEquals(12, score.getPunten()),
-                () -> Assertions.assertTrue(score.isGewonnen())
+                () -> assertTrue(score.isGewonnen())
         );
     }
 
@@ -102,23 +101,33 @@ public class SessionTest {
         // Arrange -> setup()
         // Act
         // Assert
-        Assertions.assertFalse(session.isVolzet());
+        assertFalse(session.isVolzet());
     }
 
     @Test
-    void isVolzet_vierDeelnemers_geeftTrue() {
+    void isVolzet_maximumSpelersBereikt_geeftTrue() {
         // Arrange -> setup()
         Player ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
         Player paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
-        Player sara = new Player("Sara", new User("Sara", "sara@odisee.be", "Odisee123!"));
         // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
         session.voegSpelerToe(ella);
         session.voegSpelerToe(paul);
-        session.voegSpelerToe(sara);
         // Assert
         Assertions.assertTrue(session.isVolzet());
+    }
+
+    @Test
+    void isVolzet_minderDanMaximumSpelers_geeftFalse() {
+        // Arrange -> setup()
+        Player ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
+        // Act
+        session.voegSpelerToe(emma);
+        session.voegSpelerToe(noah);
+        session.voegSpelerToe(ella);
+        // Assert
+        assertFalse(session.isVolzet());
     }
 
 }
