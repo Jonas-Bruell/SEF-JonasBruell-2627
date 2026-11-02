@@ -7,22 +7,19 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class SessionTest {
 
     private Player emma;
     private Player noah;
-    private Player ella;
-    private Player paul;
-    private Player sara;
     private Session session;
 
     @BeforeEach
     void setup() {
         this.emma = new Player("Emma", new User("Emma", "emma@odisee.be", "Odisee123!"));
         this.noah = new Player("Noah", new User("Noah", "noah@odisee.be", "Odisee123!"));
-        this.ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
-        this.paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
-        this.sara = new Player("Sara", new User("Sara", "sara@odisee.be", "Odisee123!"));
         this.session = new Session(
                 new Game("Catan", 2, 4, 60),
                 LocalDate.of(2026, 11, 3),
@@ -32,73 +29,95 @@ public class SessionTest {
 
     @Test
     void voegSpelerToe_nieuweSpeler_komtInDeelnemers() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
-        Assertions.assertEquals(List.of(emma), session.getSpelers());
+        // Assert
+        assertEquals(List.of(emma), session.getSpelers());
     }
 
     @Test
     void voegSpelerToe_tweeVerschillendeSpelers_komenBeideInDeelnemers() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
-
-        Assertions.assertEquals(List.of(emma, noah), session.getSpelers());
+        // Assert
+        assertEquals(List.of(emma, noah), session.getSpelers());
     }
 
     @Test
     void voegSpelerToe_zelfdeSpelerTweeKeer_staatSlechtsEenKeerInDeelnemers() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(emma);
-
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(1, session.getSpelers().size()),
-                () -> Assertions.assertEquals(List.of(emma), session.getSpelers())
+        // Assert
+        assertAll(
+                () -> assertEquals(1, session.getSpelers().size()),
+                () -> assertEquals(List.of(emma), session.getSpelers())
         );
     }
 
     @Test
     void registreerUitslag_spelerKrijgtTwaalfPuntenEnWint_controleerPuntenEnGewonnen() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
         session.registreerUitslag(emma, 12, true);
-
+        // Assert
         Score score = session.getScores().getFirst();
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(1, session.getScores().size()),
-                () -> Assertions.assertEquals(emma, score.getSpeler()),
-                () -> Assertions.assertEquals(12, score.getPunten()),
+        assertAll(
+                () -> assertEquals(1, session.getScores().size()),
+                () -> assertEquals(emma, score.getSpeler()),
+                () -> assertEquals(12, score.getPunten()),
                 () -> Assertions.assertTrue(score.isGewonnen())
         );
     }
 
     @Test
     void registreerUitslag_tweeSpelersKrijgenScore_komenBeideInScores() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
         session.registreerUitslag(emma, 12, true);
         session.registreerUitslag(noah, 11, false);
-
-        Assertions.assertEquals(2, session.getScores().size());
+        // Assert
+        assertEquals(2, session.getScores().size());
     }
 
     @Test
     void registreerUitslag_spelerNietInSessionKrijgtScore_komtNietInScores() {
+        // Arrange -> setup()
+        // Act
         session.voegSpelerToe(emma);
         session.registreerUitslag(noah, 12, true);
-
-        Assertions.assertEquals(0, session.getScores().size());
+        // Assert
+        assertEquals(0, session.getScores().size());
     }
 
     @Test
     void isVolzet_nieuweSessie_geeftFalse() {
+        // Arrange -> setup()
+        // Act
+        // Assert
         Assertions.assertFalse(session.isVolzet());
     }
 
     @Test
     void isVolzet_vierDeelnemers_geeftTrue() {
+        // Arrange -> setup()
+        Player ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
+        Player paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
+        Player sara = new Player("Sara", new User("Sara", "sara@odisee.be", "Odisee123!"));
+        // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
         session.voegSpelerToe(ella);
         session.voegSpelerToe(paul);
         session.voegSpelerToe(sara);
+        // Assert
         Assertions.assertTrue(session.isVolzet());
     }
 
