@@ -13,14 +13,18 @@ public class SessionTest {
 
     private Player emma;
     private Player noah;
+    private Player ella;
+    private Player paul;
     private Session session;
 
     @BeforeEach
     void setup() {
-        this.emma = new Player("Emma", new User("Emma", "emma@odisee.be", "Odisee123!"));
-        this.noah = new Player("Noah", new User("Noah", "noah@odisee.be", "Odisee123!"));
-        this.session = new Session(
-                new Game("Catan", 2, 4, 60),
+        emma = new Player("Emma", new User("Emma", "emma@odisee.be", "Odisee123!"));
+        noah = new Player("Noah", new User("Noah", "noah@odisee.be", "Odisee123!"));
+        ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
+        paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
+        session = new Session(
+                new Game("Catan", 2, 3, 60),
                 LocalDate.of(2026, 11, 3),
                 "Odisee Brussel"
         );
@@ -55,6 +59,31 @@ public class SessionTest {
         assertAll(
                 () -> assertEquals(1, session.getSpelers().size()),
                 () -> assertEquals(List.of(emma), session.getSpelers())
+        );
+    }
+
+    @Test
+    void voegSpelerToe_sessieReedsVolzet_geeftIllegalstateException() {
+        // Arrange -> setup()
+        // Act
+        session.voegSpelerToe(emma);
+        session.voegSpelerToe(noah);
+        session.voegSpelerToe(ella);
+        // Assert
+        assertThrows(
+                IllegalStateException.class,
+                () -> session.voegSpelerToe(paul)
+        );
+    }
+
+    @Test
+    void voegSpelerToe_spelerIsNull_geeftIllegalStateException() {
+        // Arrange -> setup()
+        // Act
+        // Assert
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> session.voegSpelerToe(null)
         );
     }
 
@@ -107,13 +136,10 @@ public class SessionTest {
     @Test
     void isVolzet_maximumSpelersBereikt_geeftTrue() {
         // Arrange -> setup()
-        Player ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
-        Player paul = new Player("Paul", new User("Paul", "paul@odisee.be", "Odisee123!"));
         // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
         session.voegSpelerToe(ella);
-        session.voegSpelerToe(paul);
         // Assert
         Assertions.assertTrue(session.isVolzet());
     }
@@ -121,13 +147,34 @@ public class SessionTest {
     @Test
     void isVolzet_minderDanMaximumSpelers_geeftFalse() {
         // Arrange -> setup()
-        Player ella = new Player("Ella", new User("Ella", "ella@odisee.be", "Odisee123!"));
         // Act
         session.voegSpelerToe(emma);
         session.voegSpelerToe(noah);
-        session.voegSpelerToe(ella);
         // Assert
         assertFalse(session.isVolzet());
+    }
+
+    @Test
+    void getSpelers_teruggegevenLijstWijzigen_laatSessieOngewijzigd() {
+        // Arrange
+        session.voegSpelerToe(emma);
+        List<Player> deelnemers = session.getSpelers();
+        // Act
+        deelnemers.clear();
+        // Assert
+        assertEquals(1, session.getSpelers().size());
+    }
+
+    @Test
+    void getScores_teruggegevenLijstWijzigen_laatSessieOngewijzigd() {
+        // Arrange
+        session.voegSpelerToe(emma);
+        session.registreerUitslag(emma, 12, false);
+        List<Score> scores = session.getScores();
+        // Act
+        scores.clear();
+        // Assert
+        assertEquals(1, session.getScores().size());
     }
 
 }

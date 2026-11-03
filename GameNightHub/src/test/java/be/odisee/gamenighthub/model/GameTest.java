@@ -66,50 +66,44 @@ public class GameTest {
 
     @ParameterizedTest
     @CsvSource({ "0, false", "1, true" })
-    void Game_nieuweGame_minSpelersNietKleinerDanEen(int minSpelers, boolean expected) {
+    void Game_minSpelersKleinerDanEen_geeftIllegalArgumentException(int minSpelers, boolean expected) {
         // Arrange
         // Act
         // Assert
-        if (expected) {
+        if (expected)
             assertEquals(minSpelers, new Game("Catan", minSpelers, 2, 90).getMinSpelers());
-        } else {
-            assertThrows(
-                    IllegalArgumentException.class,
-                    () -> new Game("Catan", 0, 2, 90)
-            );
-        }
+        else assertThrows(
+                IllegalArgumentException.class,
+                () -> new Game("Catan", 0, 2, 90)
+        );
     }
 
     @ParameterizedTest
     @CsvSource({ "2, 1, false", "2, 2, true", "2, 3, true" })
-    void Game_nieuweGame_maxSpelersNietKleinerDanMinSpelers(int minSpelers, int maxSpelers, boolean expected) {
+    void Game_maxSpelersKleinerDanMinSpelers_geeftIllegalArgumentException(int minSpelers, int maxSpelers, boolean expected) {
         // Arrange
         // Act
         // Assert
-        if (expected) {
+        if (expected)
             assertEquals(maxSpelers, new Game("Catan", minSpelers, maxSpelers, 90).getMaxSpelers());
-        } else {
-            assertThrows(
-                    IllegalArgumentException.class,
-                    () -> new Game("Catan", minSpelers, maxSpelers, 90)
-            );
-        }
+        else assertThrows(
+                IllegalArgumentException.class,
+                () -> new Game("Catan", minSpelers, maxSpelers, 90)
+        );
     }
 
     @ParameterizedTest
     @CsvSource({ "-1, false", "0, false", "1, true" })
-    void Game_nieuweGame_gemiddeldeSpelduurGroterDanNul(int gemiddeldeSpelduur, boolean expected) {
+    void Game_gemiddeldeSpelduurKleinerGelijkAanNul_geeftIllegalArgumentException(int gemiddeldeSpelduur, boolean expected) {
         // Arrange
         // Act
         // Assert
-        if (expected) {
+        if (expected)
             assertEquals(gemiddeldeSpelduur,new Game("Catan", 2, 4, gemiddeldeSpelduur).getGemiddeldeSpeelduur());
-        } else {
-            assertThrows(
-                    IllegalArgumentException.class,
-                    () -> new Game("Catan", 2, 4, gemiddeldeSpelduur)
-            );
-        }
+        else assertThrows(
+                IllegalArgumentException.class,
+                () -> new Game("Catan", 2, 4, gemiddeldeSpelduur)
+        );
     }
 
     @Test

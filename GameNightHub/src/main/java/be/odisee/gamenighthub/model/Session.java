@@ -29,12 +29,12 @@ public class Session {
 
     private List<Player> spelers;
     public List<Player> getSpelers() {
-        return spelers;
+        return new ArrayList<>(spelers);
     }
 
     private List<Score> scores;
     public List<Score> getScores() {
-        return scores;
+        return new ArrayList<>(scores);
     }
 
     public Session(Game game, LocalDate datum, String location) {
@@ -69,7 +69,11 @@ public class Session {
     }
 
     public void voegSpelerToe(Player speler) {
+        if (speler == null)
+            throw new IllegalArgumentException("Speler mag niet null zijn");
         if (!spelers.contains(speler)) {
+            if (isVolzet())
+                throw new IllegalStateException("Sessie is reeds volzet");
             spelers.add(speler);
         }
     }
