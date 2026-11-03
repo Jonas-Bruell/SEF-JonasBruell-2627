@@ -36,9 +36,17 @@ public class Game {
     }
 
     public Game(String titel, int minSpelers, int maxSpelers, int gemiddeldeSpeelduur) {
+        if (titel == null || titel.strip().isBlank())
+            throw new IllegalArgumentException("Titel mag niet null of leeg zijn, of enkel uit spaties bestaan");
         this.titel = titel;
+        if (minSpelers < 1)
+            throw new IllegalArgumentException("Minimum aantal spelers moet groter dan 0 zijn");
         this.minSpelers = minSpelers;
+        if (maxSpelers < minSpelers)
+            throw new IllegalArgumentException("Maximum aantal spelers moet groter dan minimum aantal spelers zijn");
         this.maxSpelers = maxSpelers;
+        if (gemiddeldeSpeelduur < 1)
+            throw new IllegalArgumentException("Gemiddelde speelduur moet groter dan 0 zijn");
         this.gemiddeldeSpeelduur = gemiddeldeSpeelduur;
     }
 

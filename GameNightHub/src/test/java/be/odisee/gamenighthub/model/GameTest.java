@@ -2,8 +2,12 @@ package be.odisee.gamenighthub.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,6 +42,78 @@ public class GameTest {
     }
 
     @Test
+    void Game_nieuweGame_titelIsNietNull() {
+        // Arrange
+        // Act
+        // Assert
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Game(null, 1, 2, 3)
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "", " ", "  " })
+    void Game_nieuweGame_titelIsNietLeegOfSpaties(String titel) {
+        // Arrange
+        // Act
+        // Assert
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Game(titel, 1, 2, 3)
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "0, false", "1, true" })
+    void Game_nieuweGame_minSpelersNietKleinerDanEen(int minSpelers, boolean expected) {
+        // Arrange
+        // Act
+        // Assert
+        if (expected) {
+            assertEquals(minSpelers, new Game("Catan", minSpelers, 2, 90).getMinSpelers());
+        } else {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> new Game("Catan", 0, 2, 90)
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "2, 1, false", "2, 2, true", "2, 3, true" })
+    void Game_nieuweGame_maxSpelersNietKleinerDanMinSpelers(int minSpelers, int maxSpelers, boolean expected) {
+        // Arrange
+        // Act
+        // Assert
+        if (expected) {
+            assertEquals(maxSpelers, new Game("Catan", minSpelers, maxSpelers, 90).getMaxSpelers());
+        } else {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> new Game("Catan", minSpelers, maxSpelers, 90)
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "-1, false", "0, false", "1, true" })
+    void Game_nieuweGame_gemiddeldeSpelduurGroterDanNul(int gemiddeldeSpelduur, boolean expected) {
+        // Arrange
+        // Act
+        // Assert
+        if (expected) {
+            assertEquals(gemiddeldeSpelduur,new Game("Catan", 2, 4, gemiddeldeSpelduur).getGemiddeldeSpeelduur());
+        } else {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> new Game("Catan", 2, 4, gemiddeldeSpelduur)
+            );
+        }
+    }
+
+    @Test
+        // Act
     void equals_zelfdeTitelsCaseExactGelijk_geeftTrue() {
         // Arrange
         Game catan1 = catan;
