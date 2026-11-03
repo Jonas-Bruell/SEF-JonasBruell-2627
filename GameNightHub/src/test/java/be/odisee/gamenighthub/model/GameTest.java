@@ -104,7 +104,7 @@ public class GameTest {
     }
 
     @Test
-    void equals_zelfdeTitelsCaseExactGelijk_geeftTrue() {
+    void equals_zelfdeTitelsCaseExactGelijk_zijnGelijk() {
         // Arrange
         Game catan1 = catan;
         Game catan2 = new Game(catanTitle, 3, 4, 90);
@@ -114,17 +114,17 @@ public class GameTest {
     }
 
     @Test
-    void equals_zelfdeTitelsCaseNietGelijk_geeftFalse() {
+    void equals_zelfdeTitelsCaseNietGelijk_zijnGelijk() {
         // Arrange
         Game catan1 = catan;
         Game catan2 = new Game ("CATAN", 3, 4, 90);
         // Act
         // Assert
-        assertNotEquals(catan1, catan2);
+        assertEquals(catan1, catan2);
     }
 
     @Test
-    void equals_spelEqualsAnderObject_geeftFalse() {
+    void equals_spelEqualsAnderObject_zijnNietGelijk() {
         // Arrange -> setup()
         // Act
         assertAll(
@@ -141,6 +141,16 @@ public class GameTest {
         // Act
         // Assert
         assertEquals(cluedo1.hashCode(), cluedo2.hashCode());
+    }
+
+    @Test
+    void hashCode_zelfdeSpellenVerschillendeCase_hashGelijk() {
+        // Arrange
+        Game catan1 = catan;
+        Game catan2 = new Game ("CATAN", 3, 4, 90);
+        // Act
+        // Assert
+        assertEquals(catan1.hashCode(), catan2.hashCode());
     }
 
     @Test

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SessionRepository {
     void save(Session session);
-    List<Session> findAll();
+    List<Session> findAll(); // lege lijst als niets
     List<Session> findByDatum(LocalDate datum);
     void delete(Session session);
 }

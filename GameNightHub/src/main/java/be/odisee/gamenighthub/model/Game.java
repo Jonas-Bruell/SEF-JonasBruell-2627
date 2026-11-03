@@ -54,12 +54,12 @@ public class Game {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return Objects.equals(titel, game.titel);
+        return Objects.equals(titel.toLowerCase(), game.titel.toLowerCase());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(titel);
+        return Objects.hashCode(titel.toLowerCase());
     }
 
     @Override

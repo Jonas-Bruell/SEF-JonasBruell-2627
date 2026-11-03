@@ -9,4 +9,7 @@ public interface UserRepository {
     List<User> findAll();
     User findByEmail(String email);
     void delete(User user);
+
+    boolean bestaatEmail(String email);
+    User zoekOpEmail(String email); // null als onbekend
 }

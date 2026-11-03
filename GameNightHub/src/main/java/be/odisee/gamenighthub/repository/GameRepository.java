@@ -9,4 +9,6 @@ public interface GameRepository {
     List<Game> findAll();
     Game findByTitle(String title);
     void delete(Game game);
+
+    Game zoekOpTitel(String title); // null als onbekend
 }
