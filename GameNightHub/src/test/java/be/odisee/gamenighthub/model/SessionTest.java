@@ -177,4 +177,31 @@ public class SessionTest {
         assertEquals(1, session.getScores().size());
     }
 
+    @Test
+    void isCompleet_elkeDeelnemerHeeftScore_geeftTrue() {
+        // Arrange
+        // Act
+        session.voegSpelerToe(emma);
+        session.registreerUitslag(emma, 12, false);
+        // Assert
+        assertTrue(session.isCompleet());
+    }
+
+    @Test
+    void isCompleet_nietElkeDeeleSpelerHeeftScore_geeftFalse() {
+        // Arrange
+        // Act
+        session.voegSpelerToe(emma);
+        // Assert
+        assertFalse(session.isCompleet());
+    }
+
+    @Test
+    void isCompleet_geenDeelnemers_geeftFalse() {
+        // Arrange
+        // Act
+        // Assert
+        assertFalse(session.isCompleet());
+    }
+
 }

@@ -2,12 +2,9 @@ package be.odisee.gamenighthub.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,7 +104,6 @@ public class GameTest {
     }
 
     @Test
-        // Act
     void equals_zelfdeTitelsCaseExactGelijk_geeftTrue() {
         // Arrange
         Game catan1 = catan;

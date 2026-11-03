@@ -88,4 +88,7 @@ public class Session {
         return (spelers.size() >= game.getMaxSpelers());
     }
 
+    public boolean isCompleet() {
+        return !spelers.isEmpty() && spelers.size() == scores.size();
+    }
 }
