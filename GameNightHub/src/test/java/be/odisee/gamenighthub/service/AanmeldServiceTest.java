@@ -53,9 +53,7 @@ public class AanmeldServiceTest {
         // Arrange
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         // Act
-        service.registreer("Noah", "noah@odisee.be", klaarWachtwoord);
-        // Verify
-        verify(userRepository).save(captor.capture());
+        User user = service.registreer("Noah", "noah@odisee.be", klaarWachtwoord);
         // Assert
         User bewaard = captor.getValue();
         assertAll(
@@ -63,6 +61,9 @@ public class AanmeldServiceTest {
                 () -> assertEquals("noah@odisee.be", bewaard.getEmail()),
                 () -> assertEquals(hashedWachtwoord, bewaard.getWachtwoordHash())
         );
+        assertSame(bewaard, user);
+        // Verify
+        verify(userRepository).save(captor.capture());
     }
 
     @Test

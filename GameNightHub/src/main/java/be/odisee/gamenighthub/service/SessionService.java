@@ -1,5 +1,6 @@
 package be.odisee.gamenighthub.service;
 
+import be.odisee.gamenighthub.model.Game;
 import be.odisee.gamenighthub.model.Session;
 import be.odisee.gamenighthub.repository.GameRepository;
 import be.odisee.gamenighthub.repository.SessionRepository;
@@ -16,7 +17,12 @@ public class SessionService {
     }
 
     Session plan(String gameTitel, LocalDate datum, String locatie) {
-        throw new UnsupportedOperationException("nog te implementeren");
+        Game game = gamerRepository.zoekOpTitel(gameTitel);
+        if (game == null)
+            throw new IllegalArgumentException("Spel niet gevonden");
+        Session session = new Session(game, datum, locatie);
+        sessionRepository.save(session);
+        return session;
     }
 
 }
