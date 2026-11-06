@@ -1,5 +1,6 @@
 package be.odisee.gamenighthub.service;
 
+import be.odisee.gamenighthub.model.Session;
 import be.odisee.gamenighthub.repository.SessionRepository;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public class LeaderboardService {
     }
 
     List<LeaderboardEntry> geefLeaderboard() {
-        throw new UnsupportedOperationException("nog te implementeren");
+        List<Session> sessions = sessionRepository.findAll();
+        return leaderboardCalculator.berekenLeaderboard(sessions);
     }
 
 }
