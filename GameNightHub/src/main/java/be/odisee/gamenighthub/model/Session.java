@@ -101,4 +101,9 @@ public class Session {
         }
         return winnaars;
     }
+
+    public boolean heeftUitslag() {
+        return !scores.isEmpty();
+    }
+
 }
