@@ -222,4 +222,13 @@ public class SessionTest {
         assertTrue(sessie.geefWinnaars().isEmpty());
     }
 
+    @Test
+    void heeftUitslag_scoreGeregistreerd_geeftTrue() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "Gent");
+        Player emma = new Player("Emma", new User("Emma", "emma@example.com", "hash1"));
+        sessie.voegSpelerToe(emma);
+        sessie.registreerUitslag(emma, 12, true);
+        assertTrue(sessie.heeftUitslag());
+    }
+
 }
