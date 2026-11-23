@@ -204,4 +204,22 @@ public class SessionTest {
         assertFalse(session.isCompleet());
     }
 
+    @Test
+    void geefWinnaars_eenWinnaarEnEenVerliezer_geeftEnkelWinnaarI() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "gent");
+        Player emma = new Player("Emma", new User("Emma", "emma@odisee.be", "ww"));
+        Player noah = new Player("Noah", new User("Noah", "noah@odisee.be", "ww"));
+        sessie.voegSpelerToe(emma);
+        sessie.voegSpelerToe(noah);
+        sessie.registreerUitslag(emma, 12, true);
+        sessie.registreerUitslag(noah, 7, false);
+        assertEquals(List.of(emma), sessie.geefWinnaars());
+    }
+
+    @Test
+    void geefWinnaars_nogGeenUitslagen_geeftLegeLijst() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "Gent");
+        assertTrue(sessie.geefWinnaars().isEmpty());
+    }
+
 }
