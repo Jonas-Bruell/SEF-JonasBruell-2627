@@ -85,7 +85,7 @@ public class Session {
     }
 
     public boolean isVolzet() {
-        return (spelers.size() >= game.getMaxSpelers());
+        return (spelers.size() > game.getMaxSpelers());
     }
 
     public boolean isCompleet() {
