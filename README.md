@@ -3,7 +3,7 @@
 - R-Nummer: r1122633
 - Vak: Software Engineering Fundamentals
 - Jaar: 2026-2027
-- Team: Jonas Brüll via Windows (owner) en Jonas Brüll via Linux
+- Team: Jonas Brüll (owner) en Jonas Brüll
 
 Regels: niemand pusht rechtstreeks op main, de reviewer merget, enkel mergen als de pipeline groen is.
 
