@@ -54,7 +54,7 @@ jobs:
         run: mvn -B -DskipTests package
 
       - name: Jar bewaren
-        uses actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7
         with:
           name: gamenighthub-jar
           path: project/gamenightub/target/*.jar
