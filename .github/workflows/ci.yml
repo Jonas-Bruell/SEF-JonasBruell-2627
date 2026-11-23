@@ -19,7 +19,7 @@ jobs:
       - name: Code ophalen
         uses: actions/checkout@v7
 
-      - name: JDK 26 installeren
+      - name: JDK 27 installeren
         uses: actions/setup-java@v6
         with:
           distribution: temurin
