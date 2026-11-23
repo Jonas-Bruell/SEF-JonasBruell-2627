@@ -3,7 +3,7 @@
 - R-Nummer: r1122633
 - Vak: Software Engineering Fundamentals
 - Jaar: 2026-2027
-- Team: Jonas Brüll (owner) en Jonas Brüll
+- Team: Jonas Brüll via Windows (owner) en Jonas Brüll via Linux
 
 # Project Structuur
 ## GameNightHub
