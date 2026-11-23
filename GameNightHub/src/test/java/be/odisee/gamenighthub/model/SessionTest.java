@@ -216,4 +216,10 @@ public class SessionTest {
         assertEquals(List.of(emma), sessie.geefWinnaars());
     }
 
+    @Test
+    void geefWinnaars_nogGeenUitslagen_geeftLegeLijst() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "Gent");
+        assertTrue(sessie.geefWinnaars().isEmpty());
+    }
+
 }
