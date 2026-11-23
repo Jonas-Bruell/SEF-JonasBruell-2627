@@ -96,4 +96,14 @@ public class Session {
         return spelers.remove(speler);
     }
 
+    public List<Player> geefWinnaars() {
+        List<Player> winnaars = new ArrayList<>();
+        for (Score  score : scores) {
+            if (score.isGewonnen()) {
+                winnaars.add(score.getSpeler());
+            }
+        }
+        return winnaars;
+    }
+
 }
