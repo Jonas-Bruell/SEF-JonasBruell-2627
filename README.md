@@ -5,6 +5,8 @@
 - Jaar: 2026-2027
 - Team: Jonas Brüll via Windows (owner) en Jonas Brüll via Linux
 
+Regels: niemand pusht rechtstreeks op main, de reviewer merget, enkel mergen als de pipeline groen is.
+
 # Project Structuur
 ## GameNightHub
 - UML structuur voor project
