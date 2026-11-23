@@ -91,4 +91,14 @@ public class Session {
     public boolean isCompleet() {
         return !spelers.isEmpty() && spelers.size() == scores.size();
     }
+
+    public List<Player> geefWinnaars() {
+        List<Player> winnaars = new ArrayList<>();
+        for (Score  score : scores) {
+            if (score.isGewonnen()) {
+                winnaars.add(score.getSpeler());
+            }
+        }
+        return winnaars;
+    }
 }
