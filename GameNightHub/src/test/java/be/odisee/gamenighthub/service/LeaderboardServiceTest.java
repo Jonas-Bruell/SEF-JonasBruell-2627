@@ -7,6 +7,7 @@ import be.odisee.gamenighthub.model.User;
 import be.odisee.gamenighthub.repository.SessionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ public class LeaderboardServiceTest {
     @BeforeEach
     public void setUp() {
         sessionRepository = mock(SessionRepository.class);
-        leaderboardCalculator = mock(LeaderboardCalculator.class);
         service = new LeaderboardService(sessionRepository, leaderboardCalculator);
 
         player1 = new Player("Speler1", new User("Speler1", "speler1@mail.test", "ww"));
@@ -58,7 +58,7 @@ public class LeaderboardServiceTest {
         // Act
         List<LeaderboardEntry> leaderboard = service.geefLeaderboard();
         // Assert(Act)
-        assertSame(new ArrayList<>(), leaderboard);
+        assertTrue(leaderboard.isEmpty());
     }
 
     @Test
@@ -92,13 +92,15 @@ public class LeaderboardServiceTest {
         session1.registreerUitslag(player2, 5, false);
         List<Session> sessies = List.of(session1, session2);
         when(sessionRepository.findAll()).thenReturn(sessies);
-        // Act
-        List<LeaderboardEntry> leaderboard = service.geefLeaderboard();
-        // Verify
-        verify(leaderboardCalculator).berekenLeaderboard(sessies);
+        try (MockedStatic<LeaderboardCalculator> calc = mockStatic(LeaderboardCalculator.class)) {
+            // Act
+            service.geefLeaderboard();
+            // Verify
+            calc.verify(() -> LeaderboardCalculator.berekenLeaderboard(sessies));
+        }
     }
 
-
+    @Test
     void geefLeaderBoard_MockSesiesInLeaderboard_geeftLijstMetLeaderboardEntries () {
         // Arrange
         session1.voegSpelerToe(player1);
@@ -111,10 +113,13 @@ public class LeaderboardServiceTest {
                 new LeaderboardEntry(player1, 10, 1),
                 new LeaderboardEntry(player2, 5, 0)
         );
-        when(leaderboardCalculator.berekenLeaderboard(sessies)).thenReturn(leaderboardMock);
-        // Act
-        List<LeaderboardEntry> leaderboard = service.geefLeaderboard();
-        // Assert
-        assertSame(leaderboardMock, leaderboard);
+        try (MockedStatic<LeaderboardCalculator> calc = mockStatic(LeaderboardCalculator.class)) {
+            calc.when(() -> LeaderboardCalculator.berekenLeaderboard(sessies))
+                    .thenReturn(leaderboardMock);
+            // Act
+            List<LeaderboardEntry> leaderboard = service.geefLeaderboard();
+            // Assert
+            assertSame(leaderboardMock, leaderboard);
+        }
     }
 }

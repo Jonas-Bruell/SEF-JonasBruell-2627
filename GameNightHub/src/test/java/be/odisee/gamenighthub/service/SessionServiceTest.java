@@ -47,6 +47,8 @@ public class SessionServiceTest {
         when(gamerepository.zoekOpTitel("gekend spel")).thenReturn(new Game("gekend spel", 1, 2, 30));
         // Act
         Session sessie = service.plan("gekend spel", datum, locatie);
+        // Verify
+        verify(sessionrepository).save(captor.capture());
         // Assert
         Session bewaard = captor.getValue();
         assertAll(
@@ -55,7 +57,5 @@ public class SessionServiceTest {
                 () -> assertEquals(locatie, bewaard.getLocation())
         );
         assertSame(sessie, bewaard);
-        // Verify
-        verify(sessionrepository).save(captor.capture());
     }
 }

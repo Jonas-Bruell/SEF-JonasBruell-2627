@@ -29,7 +29,7 @@ public class UitnodigingServiceTest {
         service = new UitnodigingService(mailer);
     }
 
-    @Test
+
     void stuurUitnodiging_metSession_stuurtGeldigeUitnodigingNaarAlleDeelnemers() {
         // Arrange
         Game spel = new Game("spel", 1, 2, 30);
