@@ -28,3 +28,33 @@ jobs:
 
       - name: Bouwen en testen
         run: mvn -B test
+
+  package:
+    name: package
+    needs: build-en-test
+    if: github.event_name == 'push' && github.ref == 'ref/heads/main'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: GameNightHub
+
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v7
+
+      - name: JDK 27 installeren 
+        uses: actions/setup-jave@v6
+        with:
+          distribution: temurin
+          java-version: '27'
+          cache: maven
+
+      - name: Jar maken
+        run: mvn -B -DskipTests package
+
+      - name: Jar bewaren
+        uses actions/upload-artifact@7
+        with:
+          name: gamenighthub-jar
+          path: project/gamenightub/target/*.jar
