@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-en-test:
+    name: build-en-test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: GameNightHub
+
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v7
+
+      - name: JDK 26 installeren
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '26'
+          cache: maven
+
+      - name: Bouwen en testen
+        run: mvn -B test
