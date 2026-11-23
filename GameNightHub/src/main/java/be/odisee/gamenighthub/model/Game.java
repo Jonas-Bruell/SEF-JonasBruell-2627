@@ -71,4 +71,8 @@ public class Game {
         return aantalSpelers >= minSpelers && aantalSpelers <= maxSpelers;
     }
 
+    public boolean isKortSpel() {
+        return gemiddeldeSpeelduur <= 30;
+    }
+
 }

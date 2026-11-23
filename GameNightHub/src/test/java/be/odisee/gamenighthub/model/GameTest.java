@@ -182,4 +182,10 @@ public class GameTest {
         assertEquals(isGeschikt, verwachteBoolean);
     }
 
+    @Test
+    void isKortSpel_speelduurDertigMinuten_geeftTrue() {
+        Game game = new Game("Dobble", 2, 8, 30);
+        assertTrue(game.isKortSpel());
+    }
+
 }
