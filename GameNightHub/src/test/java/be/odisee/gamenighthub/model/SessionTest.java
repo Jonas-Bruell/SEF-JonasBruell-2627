@@ -204,4 +204,20 @@ public class SessionTest {
         assertFalse(session.isCompleet());
     }
 
+    @Test
+    void verwijderSpeler_deelnemer_verdwijntUitDeelnemers() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "Gent");
+        Player emma = new Player("Emma", new User("Emma", "emma@example.com", "hash1"));
+        sessie.voegSpelerToe(emma);
+        assertTrue(sessie.verwijderSpeler(emma));
+        assertTrue(sessie.getSpelers().isEmpty());
+    }
+
+    @Test
+    void verwijderSpeler_geenDeelnemer_geeftFalse() {
+        Session sessie = new Session(new Game("Catan", 3, 4, 90), LocalDate.of(2026, 11, 14), "Gent");
+        Player emma = new Player("Emma", new User("Emma", "emma@example.com", "hash1"));
+        assertFalse(sessie.verwijderSpeler(emma));
+    }
+
 }

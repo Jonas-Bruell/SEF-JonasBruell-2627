@@ -91,4 +91,9 @@ public class Session {
     public boolean isCompleet() {
         return !spelers.isEmpty() && spelers.size() == scores.size();
     }
+
+    public boolean verwijderSpeler(Player speler) {
+        return spelers.remove(speler);
+    }
+
 }
